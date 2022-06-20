@@ -20,9 +20,9 @@ def hello_world():  # put application's code here
 def Picture_prediction():
     if request.method == 'POST':
         some_json = request.get_json()
-        image_bytes=some_json['body'].encode()
-        value = base64.b64decode( image_bytes)
-        image = Image.open(io.BytesIO(value))
+        #image_bytes=some_json['body'].encode()
+        #value = base64.b64decode( image_bytes)
+        #image = Image.open(io.BytesIO(value))
 
 
 
