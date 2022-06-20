@@ -23,7 +23,7 @@ def Picture_prediction():
         image_bytes=some_json['body'].encode()
         value = base64.b64decode( image_bytes)
         image = Image.open(io.BytesIO(value))
-        image.save('out883.jpg')
+
 
 
         return jsonify({'value':1})
