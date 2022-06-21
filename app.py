@@ -20,14 +20,17 @@ def hello_world():  # put application's code here
 def Picture_prediction():
     if request.method == 'POST':
         some_json = request.get_json()
-        image_bytes=some_json['body'].encode()
-        value = base64.b64decode( image_bytes)
-        image = Image.open(io.BytesIO(value))
+        picture_list = some_json['body']
+        i=0
+        for image_str in picture_list:
+            image_bytes = image_str.encode()
+            value = base64.b64decode(image_bytes)
+            image = Image.open(io.BytesIO(value))
+            #image.save('image'+str(i)+'.jpg')
+            i = i + 1
 
-
-
-        return jsonify({'value':1})
+        return jsonify({'value': i})
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=4000, debug=True)
