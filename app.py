@@ -25,6 +25,7 @@ def Picture_prediction():
         some_json = request.get_json()
         picture_list = some_json['body']
         i = 0
+        results=[]
         for image_str in picture_list:
             # convert string into bytes
             image_bytes = image_str.encode()
@@ -47,8 +48,9 @@ def Picture_prediction():
                 result = 'cat'
             if pred[0][0] > 0:
                 result = 'dog'
+            results.add(result)
 
-        return jsonify({'value': result})
+        return jsonify({'value': results})
 
 
 
