@@ -4,13 +4,10 @@ import io
 
 from PIL import Image
 from flask import Flask, jsonify, request
-import joblib
 import tensorflow as tf
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
-import sklearn
 
-model = joblib.load('testmodel.pkl')
 
 with tf.device('/CPU:0'):
     model1 = tf.keras.models.load_model('TheCatsDogsModel.h5')
@@ -53,16 +50,6 @@ def Picture_prediction():
 
         return jsonify({'value': result})
 
-
-@app.route('/titanicModel', methods=['POST'])
-def titanicModel():
-    if request.method == 'POST':
-        some_json = request.get_json()
-        data = some_json['body']
-        prediction = model.predict(data)
-        pred = prediction.tolist()
-        print(type(pred))
-        return jsonify({'prediction': pred})
 
 
 if __name__ == '__main__':
