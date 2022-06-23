@@ -48,7 +48,7 @@ def Picture_prediction():
                 result = 'cat'
             if pred[0][0] > 0:
                 result = 'dog'
-            results.add(result)
+            results.append(result)
 
         return jsonify({'value': results})
 
