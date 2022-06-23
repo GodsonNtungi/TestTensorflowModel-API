@@ -6,8 +6,8 @@ from PIL import Image
 from flask import Flask, jsonify, request
 import tensorflow as tf
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 
 with tf.device('/CPU:0'):
     model1 = tf.keras.models.load_model('TheCatsDogsModel.h5')
@@ -25,15 +25,15 @@ def Picture_prediction():
         some_json = request.get_json()
         picture_list = some_json['body']
         i = 0
-        results=[]
+        results = []
         for image_str in picture_list:
             # convert string into bytes
             image_bytes = image_str.encode()
             # decode the base 64 bytes to obtain  image bytes
             value = base64.b64decode(image_bytes)
             image = Image.open(io.BytesIO(value))
-            image.save('obama.jpg')
-            img = tf.io.read_file("obama.jpg")
+            image.save('picture.jpg')
+            img = tf.io.read_file("picture.jpg")
             with tf.device('/CPU:0'):
                 tensor = tf.io.decode_image(img, dtype=tf.dtypes.float32)
             tensor = tf.image.resize(tensor, [160, 160])
@@ -49,9 +49,9 @@ def Picture_prediction():
             if pred[0][0] > 0:
                 result = 'dog'
             results.append(result)
+            os.remove('picture.jpg')
 
         return jsonify({'value': results})
-
 
 
 if __name__ == '__main__':
